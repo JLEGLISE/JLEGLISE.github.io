@@ -8,6 +8,10 @@ const Columns =
 
 function Start() 
 {
+    console.log("Starting Coloring!");
+    if (timelineData.length < 1) return;
+    if (timelineData[0].length - 1 < Columns.TXT_COL) return;
+
     let markers = GetTimelineMarkers();
 
     timelineData.forEach(markerData => 
@@ -27,7 +31,6 @@ function GetTimelineMarkers()
 {
     return timeline._timenav._markers
         .map((m,i) => new Marker(m._el, m.data.text.headline));
-        //.filter((m, i) => query.indexOf(m.headline) != -1);
 }
 
 function Marker(el, h)
