@@ -6,7 +6,7 @@ const Columns =
     HEADLINE : 9
 }
 
-function Start() 
+function SetMarkerColors() 
 {
     console.log("Starting Coloring!");
     if (timelineData.length < 1) return;

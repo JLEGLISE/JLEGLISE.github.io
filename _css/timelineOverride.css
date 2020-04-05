@@ -12,11 +12,49 @@
     padding-left: 3em;
     padding-right: 0.8em;
     margin: 0;
-    z-index: 99;
+    z-index: 20;
     background: #ffffff80;
     display: flex;
     height: 100%;
     flex-flow: row nowrap;
     justify-content: flex-start;
     align-items: center;
+}
+
+#timeline-embed.tl-timeline
+{
+    overflow: visible;
+}
+
+#timeline-embed .tl-menubar {display: none;}
+
+.timeline-controls
+{
+    position: relative;
+    left: 50%;
+    display: flex;
+    z-index: 21;
+    transform: translateX(-50%);
+    width: 8.5em;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+}
+
+.timeline-controls > .tl-menubar-button
+{
+    background-color: #fff;
+    border-radius: 100%;
+    width: 2em;
+    height: 2em;
+    position: relative;
+    box-shadow: 0 0.05em 0.15em #00000036;
+    padding: 0.45em;
+    box-sizing: border-box;
+    border: 0.5px solid #e7e7e7;
+    color: #2f2f2f;
+}
+
+.tl-attribution
+{
+    display: none;
 }

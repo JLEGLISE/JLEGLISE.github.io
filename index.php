@@ -10,6 +10,7 @@
         <link rel="stylesheet" href="_css/timelineOverride.css">
     </head>
     <body>
+        <h1>Chronologie du design français</h1>
         <div id='timeline-embed' style="width: 100%; height: 600px"></div>
         <?php 
             $Spreadsheet_htmlUrl = 'https://docs.google.com/spreadsheets/d/1n1FvuJDOaLvMgUWPEmNEdkdJ14hL1D1ynsq7OHNH5NQ/pubhtml';
@@ -25,7 +26,9 @@
             const timelineOptions = 
             {
                 hash_bookmark: true,
-                language: "fr"
+                language: "fr",
+                scale_factor: 7,
+                start_at_slide: 11
             }
 
             // The TL.Timeline constructor takes at least two arguments:
@@ -44,7 +47,25 @@
             
             document.addEventListener('DOMContentLoaded', function()
             {
-                Start();
+                SetMarkerColors();
+                
+                let menuBar = document.getElementsByClassName("tl-menubar")[0];
+                if (menuBar === undefined)
+                {
+                    console.error("menuBar is undefined");
+                    return
+                }
+
+                let tlControls = menuBar.cloneNode(true);
+                document.getElementsByTagName("body")[0].appendChild(tlControls);
+                tlControls.style = "";
+                tlControls.classList.remove("tl-menubar");
+                tlControls.classList.add("timeline-controls")
+
+                tlControls.childNodes[0].addEventListener('click', e => timeline._menubar._onButtonZoomIn(e))
+                tlControls.childNodes[1].addEventListener('click', e => timeline._menubar._onButtonZoomOut(e))
+                tlControls.childNodes[2].addEventListener('click', e => timeline.goTo(timelineOptions.start_at_slide))
+
             }, false);
 
           </script>
