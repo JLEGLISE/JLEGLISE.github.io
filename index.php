@@ -7,12 +7,7 @@
         <link title="timeline-styles" rel="stylesheet" href="https://cdn.knightlab.com/libs/timeline3/latest/css/timeline.css">
         <script src="https://cdn.knightlab.com/libs/timeline3/latest/js/timeline.js"></script>
         <?php include 'GoogleSheet.php'; ?>
-        <style>
-            .tl-timemarker .tl-timemarker-content-container .tl-timemarker-content .tl-timemarker-text h2.tl-headline.tl-headline-fadeout::after, .tl-timemarker .tl-timemarker-content-container .tl-timemarker-content .tl-timemarker-text h2.tl-headline p.tl-headline-fadeout::after
-            {
-                display: none;
-            }
-        </style>
+        <link rel="stylesheet" href="_css/timelineOverride.css">
     </head>
     <body>
         <div id='timeline-embed' style="width: 100%; height: 600px"></div>
@@ -26,6 +21,13 @@
         ?>
         <script type="text/javascript">
 
+
+            const timelineOptions = 
+            {
+                hash_bookmark: true,
+                language: "fr"
+            }
+
             // The TL.Timeline constructor takes at least two arguments:
             // the id of the Timeline container (no '#'), and
             // the URL to your JSON data file or Google spreadsheet.
@@ -33,7 +35,11 @@
             // and the element must have CSS styling to give it width and height
             // optionally, a third argument with configuration options can be passed.
             // See below for more about options.
-            const timeline = new TL.Timeline('timeline-embed', '<?php echo $Spreadsheet_htmlUrl; ?>');
+            const timeline = new TL.Timeline(
+                'timeline-embed',
+                '<?php echo $Spreadsheet_htmlUrl; ?>',
+                timelineOptions);
+
             const timelineData = <?php echo json_encode($sheet->getData()); ?>;
             
             document.addEventListener('DOMContentLoaded', function()

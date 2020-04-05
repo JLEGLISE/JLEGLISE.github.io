@@ -1,0 +1,22 @@
+.tl-timemarker .tl-timemarker-content-container .tl-timemarker-content .tl-timemarker-text h2.tl-headline.tl-headline-fadeout::after, 
+.tl-timemarker .tl-timemarker-content-container .tl-timemarker-content .tl-timemarker-text h2.tl-headline p.tl-headline-fadeout::after
+{
+    display: none;
+}
+
+/* Nom des groupes */
+.tl-timegroup .tl-timegroup-message
+{
+    color: #6f6f6f;
+    text-shadow: none;
+    padding-left: 3em;
+    padding-right: 0.8em;
+    margin: 0;
+    z-index: 99;
+    background: #ffffff80;
+    display: flex;
+    height: 100%;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-items: center;
+}
