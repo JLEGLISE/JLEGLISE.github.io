@@ -66,6 +66,16 @@
                 tlControls.childNodes[1].addEventListener('click', e => timeline._menubar._onButtonZoomOut(e))
                 tlControls.childNodes[2].addEventListener('click', e => timeline.goTo(timelineOptions.start_at_slide))
 
+                setTimeout(() =>
+                {
+                    let groupCount = timeline._timenav._groups.length;
+
+                    for (let i = 1; i < groupCount; i++) 
+                    {
+                        // TODO: Find and hide marker
+                    }
+                }, 10000);
+
             }, false);
 
           </script>
