@@ -8,6 +8,7 @@
         <script src="https://cdn.knightlab.com/libs/timeline3/latest/js/timeline.js"></script>
         <?php include 'GoogleSheet.php'; ?>
         <link rel="stylesheet" href="_css/timelineOverride.css">
+        <link rel="stylesheet" href="_css/page.css">
     </head>
     <body>
         <h1>Chronologie du design français</h1>
@@ -15,8 +16,6 @@
         <?php 
             $Spreadsheet_htmlUrl = 'https://docs.google.com/spreadsheets/d/1n1FvuJDOaLvMgUWPEmNEdkdJ14hL1D1ynsq7OHNH5NQ/pubhtml';
             $Spreadsheet_csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRKYXpHMQRv827vwMSmmdzfN1HJcrkZO6CXmliDdPqykS4Jt2ChT4BEaRWX5wKqgc2Nf2bC3hG4YVWT/pub?output=csv';
-            $Spreadsheet_htmlUrl_debug = 'https://docs.google.com/spreadsheets/d/1j2keiOzMpsiFfdr4Dwb0tF12MBmbdQpPDHjXJ-B8ZB4/pubhtml';
-            $Spreadsheet_csvUrl_debug = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ4GXtZMKH4HXLfiuUJWkYHbbWgI3493nul9BK1i0ec_7HLLiEaFXGl0_zN7KScaplWIeEMdhDO83X5/pub?output=csv';
 
             $sheet = new GoogleSheet($Spreadsheet_csvUrl);
         ?>
@@ -48,7 +47,15 @@
             document.addEventListener('DOMContentLoaded', function()
             {
                 SetMarkerColors();
+                SetGroupColors();
+                OverrideMenuBar();
                 
+                //HideGroupStartMarkers();
+
+            }, false);
+
+            function OverrideMenuBar() 
+            {
                 let menuBar = document.getElementsByClassName("tl-menubar")[0];
                 if (menuBar === undefined)
                 {
@@ -66,6 +73,10 @@
                 tlControls.childNodes[1].addEventListener('click', e => timeline._menubar._onButtonZoomOut(e))
                 tlControls.childNodes[2].addEventListener('click', e => timeline.goTo(timelineOptions.start_at_slide))
 
+            }
+
+            function HideGroupStartMarkers()
+            {
                 setTimeout(() =>
                 {
                     let groupCount = timeline._timenav._groups.length;
@@ -75,8 +86,7 @@
                         // TODO: Find and hide marker
                     }
                 }, 10000);
-
-            }, false);
+            }
 
           </script>
           <script src="StyleInjector.js"></script>
