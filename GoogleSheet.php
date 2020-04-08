@@ -32,7 +32,7 @@ class GoogleSheet
         {
             if ($i == 0) continue;
             $cells = str_getcsv($line);
-            if ($cells[0] == '') continue;
+            if (trim($cells[0]) === '') continue;
             
             $this->data[] = $cells;
         }
