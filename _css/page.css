@@ -1,5 +1,66 @@
-h1
+
+::selection
+{
+    color: white;
+    background: black;
+}
+
+#title, #legendTitle
 {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    margin-left: 5em;
+    font-size: 2.5em;
+}
+
+#title 
+{
+    text-align: center;
+    margin-bottom: 1.2em;
+    margin-top: 1.2em;
+}
+   
+
+#legendTitle 
+{
+    margin-top: 1em;
+    margin-bottom: 1.5em;
+}
+
+#content
+{
+    margin-left: 27.5%;
+    margin-right: 27.5%;
+    margin-bottom: 20vh;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.legendElement h2 
+{
+    margin-bottom: 0.3em;
+}
+
+.legendElement p 
+{
+    margin-bottom: 3em;
+}
+
+
+#elementContainer
+{
+    max-width: 75%;
+}
+
+.legendElement
+{
+    position: relative;
+}
+
+.bloc
+{
+    display: block;
+    position: absolute;
+    top: -0.11em;
+    left: -2em;
+    width: 0.5em; 
+    height: 2em;
+    background-color: lightcoral;
 }
