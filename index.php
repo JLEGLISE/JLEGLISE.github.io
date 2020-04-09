@@ -1,3 +1,14 @@
+<?php 
+    include 'GoogleSheet.php';
+    include 'Group.php';
+
+    $Spreadsheet_htmlUrl = 'https://docs.google.com/spreadsheets/d/1n1FvuJDOaLvMgUWPEmNEdkdJ14hL1D1ynsq7OHNH5NQ/pubhtml';
+    $Spreadsheet_csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRKYXpHMQRv827vwMSmmdzfN1HJcrkZO6CXmliDdPqykS4Jt2ChT4BEaRWX5wKqgc2Nf2bC3hG4YVWT/pub?output=csv';
+
+    $sheet = new GoogleSheet($Spreadsheet_csvUrl);
+
+    $Columns = array("BG_COL" => 18, "TXT_COL" => 19, "HEADLINE" => 9, 'GROUP_NAME' => 16);
+?>
 <!DOCTYPE html>
 <html lang="fr-FR">
     <head>
@@ -6,19 +17,38 @@
         <title>Chronologie design français</title>
         <link title="timeline-styles" rel="stylesheet" href="https://cdn.knightlab.com/libs/timeline3/latest/css/timeline.css">
         <script src="https://cdn.knightlab.com/libs/timeline3/latest/js/timeline.js"></script>
-        <?php include 'GoogleSheet.php'; ?>
         <link rel="stylesheet" href="_css/timelineOverride.css">
         <link rel="stylesheet" href="_css/page.css">
+        <style>
+            <?php
+
+                $groupData = array_filter($sheet->getData(), function($row) use ($Columns)
+                {
+                    return is_numeric($row[$Columns['HEADLINE']]);
+                });
+
+                $groupData = array_map(function($row) use ($Columns)
+                {
+                    return new Group(
+                        $row[$Columns['BG_COL']],
+                        $row[$Columns['TXT_COL']],
+                        (int)$row[$Columns['HEADLINE']],
+                        $row[$Columns['GROUP_NAME']]
+                    );
+                }, $groupData);
+
+                $groupCount = sizeof($groupData);
+                foreach ($groupData as $i => $group)
+                {
+                    echo $group->getCSS($groupCount);
+                }
+                
+            ?>
+        </style>
     </head>
     <body>
         <h1>Chronologie du design français</h1>
         <div id='timeline-embed' style="width: 100%; height: 600px"></div>
-        <?php 
-            $Spreadsheet_htmlUrl = 'https://docs.google.com/spreadsheets/d/1n1FvuJDOaLvMgUWPEmNEdkdJ14hL1D1ynsq7OHNH5NQ/pubhtml';
-            $Spreadsheet_csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRKYXpHMQRv827vwMSmmdzfN1HJcrkZO6CXmliDdPqykS4Jt2ChT4BEaRWX5wKqgc2Nf2bC3hG4YVWT/pub?output=csv';
-
-            $sheet = new GoogleSheet($Spreadsheet_csvUrl);
-        ?>
         <script type="text/javascript">
 
 
@@ -47,7 +77,7 @@
             document.addEventListener('DOMContentLoaded', function()
             {
                 SetMarkerColors();
-                SetGroupColors();
+                // SetGroupColors();
                 OverrideMenuBar();
                 
                 //HideGroupStartMarkers();
@@ -90,5 +120,8 @@
 
           </script>
           <script src="StyleInjector.js"></script>
+          <section id="content">
+
+          </section>
     </body>
 </html>
