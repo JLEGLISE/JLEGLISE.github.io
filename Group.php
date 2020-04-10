@@ -24,6 +24,7 @@ class Group
         $css = '/* '.$this->groupName.' */'.PHP_EOL;
         $css .= $selector.'{background-color: '.$this->bgColor.';}'.PHP_EOL;
         $css .= $selector.' .tl-timegroup-message {color: '.$this->textColor.';}'.PHP_EOL;
+        $css .= '.legendElement:nth-child('.($groupCount - $this->index + 1).') .bloc {background-color: '.$this->bgColor.';}'.PHP_EOL;
 
         return $css;
     }
