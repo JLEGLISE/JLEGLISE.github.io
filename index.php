@@ -3,7 +3,7 @@
     include 'Group.php';
 
     $Spreadsheet_htmlUrl = 'https://docs.google.com/spreadsheets/d/1n1FvuJDOaLvMgUWPEmNEdkdJ14hL1D1ynsq7OHNH5NQ/pubhtml';
-    $Spreadsheet_csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRKYXpHMQRv827vwMSmmdzfN1HJcrkZO6CXmliDdPqykS4Jt2ChT4BEaRWX5wKqgc2Nf2bC3hG4YVWT/pub?output=tsv';
+    $Spreadsheet_csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRKYXpHMQRv827vwMSmmdzfN1HJcrkZO6CXmliDdPqykS4Jt2ChT4BEaRWX5wKqgc2Nf2bC3hG4YVWT/pub?output=csv';
 
     $sheet = new GoogleSheet($Spreadsheet_csvUrl);
 
@@ -77,11 +77,10 @@
             
             document.addEventListener('DOMContentLoaded', function()
             {
-                SetMarkerColors();
-                // SetGroupColors();
+                PostProcessMarkers();
                 OverrideMenuBar();
-                
-                //HideGroupStartMarkers();
+
+                timeline._updateDisplay();
 
             }, false);
 
@@ -104,19 +103,6 @@
                 tlControls.childNodes[1].addEventListener('click', e => timeline._menubar._onButtonZoomOut(e))
                 tlControls.childNodes[2].addEventListener('click', e => timeline.goTo(timelineOptions.start_at_slide))
 
-            }
-
-            function HideGroupStartMarkers()
-            {
-                setTimeout(() =>
-                {
-                    let groupCount = timeline._timenav._groups.length;
-
-                    for (let i = 1; i < groupCount; i++) 
-                    {
-                        // TODO: Find and hide marker
-                    }
-                }, 10000);
             }
 
         </script>

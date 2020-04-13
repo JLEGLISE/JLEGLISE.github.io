@@ -17,19 +17,24 @@ const Columns =
 
 */
 
-function SetMarkerColors() 
+function PostProcessMarkers() 
 {
-    console.log("Coloring Markers");
+    console.log("Post-Processing Markers");
     if (timelineData.length < 1) return;
-    if (timelineData[0].length - 1 < Columns.TXT_COL) return;
-
+    
     let markers = GetTimelineMarkers();
-
+    
     timelineData.forEach(markerData => 
     {
-        marker = markers.filter((m, i) => m.headline === markerData[Columns.HEADLINE])[0];
+        if (markerData.length - 1 < Columns.TXT_COL) return;
+        let marker = markers.filter((m, i) => m.headline === markerData[Columns.HEADLINE])[0];
         if (marker != undefined)
         {
+            if (isInt(marker.guid.substr(1)))
+            {
+                marker.Hide();
+                return;
+            }
             marker.SetBackgroundColor(markerData[Columns.BG_COL]);
             marker.SetTextColor(markerData[Columns.TXT_COL]);
         }
@@ -41,13 +46,14 @@ function SetMarkerColors()
 function GetTimelineMarkers()
 {
     return timeline._timenav._markers
-        .map((m,i) => new Marker(m._el, m.data.text.headline));
+        .map((m,i) => new Marker(m._el, m.data.text.headline, m.data.unique_id));
 }
 
-function Marker(el, h)
+function Marker(el, h, id)
 {
     this.htmlContent = el;
     this.headline = h;
+    this.guid = id;
 
     this.SetBackgroundColor = function(color)
     {
@@ -58,47 +64,11 @@ function Marker(el, h)
     {
         this.htmlContent.text.firstChild.style.color = color;
     }
-}
 
-/*
-
-    GROUP COLORING
-
-*/
-
-function SetGroupColors()
-{
-    console.log("Coloring Groups");
-    let groups = GetTimeLineGroups();
-    let groupData = timelineData.filter((datum, i) => isInt(datum[Columns.HEADLINE]));
-
-    groupData.forEach((datum) =>
+    this.Hide = function()
     {
-        let matchingGroup = groups[datum[Columns.HEADLINE] - 1];
-        matchingGroup.SetBackgroundColor(datum[Columns.BG_COL]);
-        matchingGroup.SetTextColor(datum[Columns.TXT_COL]);
-    });
-}
-
-function GetTimeLineGroups()
-{
-    return timeline._timenav._groups
-        .map( (g, i) => new Group(g._el.message, g._el.container));
-}
-
-function Group(l, b)
-{
-    this.labelHtml = l;
-    this.backgroundHtml = b;
-
-    this.SetBackgroundColor = function(color)
-    {
-        this.backgroundHtml.style.backgroundColor = color;
-    }
-
-    this.SetTextColor = function(color)
-    {
-        this.labelHtml.style.color = color;
+        this.htmlContent.container.style.display = 'none';
+        console.log(this.guid + " was removed.");
     }
 }
 
