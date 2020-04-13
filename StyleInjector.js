@@ -72,6 +72,24 @@ function Marker(el, h, id)
     }
 }
 
+function EventInterceptor()
+{
+    this.previousTimelineId = undefined;
+
+    this.initialize = function()
+    {
+        this.previousTimelineId = timeline.current_id;
+        timeline.on("change", e => this.onTimelineChange(e.unique_id), timeline);
+
+    }
+
+    this.onTimelineChange = function(id)
+    {
+        if (isInt(id.substr(1))) timeline.goToId(this.previousTimelineId);
+        this.previousTimelineId = timeline.current_id;
+    }
+}
+
 /*
 
     HELPER FUNCTIONS

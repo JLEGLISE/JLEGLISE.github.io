@@ -19,6 +19,7 @@
         <script src="https://cdn.knightlab.com/libs/timeline3/latest/js/timeline.js"></script>
         <link rel="stylesheet" href="_css/timelineOverride.css">
         <link rel="stylesheet" href="_css/page.css">
+        <script src="StyleInjector.js"></script>
         <style>
             <?php
 
@@ -82,6 +83,9 @@
 
                 timeline._updateDisplay();
 
+                let interceptor = new EventInterceptor();
+                interceptor.initialize();
+
             }, false);
 
             function OverrideMenuBar() 
@@ -106,7 +110,6 @@
             }
 
         </script>
-        <script src="StyleInjector.js"></script>
         <section id="content">
             <h1 id="legendTitle">À quoi correspondent ces catégories ?</h1>
             <div id="elementContainer">
