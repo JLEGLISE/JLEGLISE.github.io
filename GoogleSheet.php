@@ -21,6 +21,7 @@ class GoogleSheet
         $this->URL = $inputUrl;
 
         $rawData = file_get_contents($this->URL);
+        //$this->_rawLog(preg_replace('(\t)', '[TAB]', $rawData));
 
         if (!$rawData)
         {
@@ -30,10 +31,18 @@ class GoogleSheet
         
         foreach ($lines as $i => $line) 
         {
-            if ($i == 0) continue;
-            $cells = str_getcsv($line);
-            if (trim($cells[0]) === '') continue;
-            
+            $cells = str_getcsv($line); //, "\t");
+            if ($i == 0) 
+            {
+                //$this->_log('Skipping first line: '.$cells[0]);
+                continue;
+            }
+            if (trim($cells[0]) === '') 
+            {
+                //$this->_log('Skipping Empty cell at line '.($i + 1).': {'.$cells[0].'}');
+                continue;
+            }
+            //$this->_log('Added data from line '.($i + 1).': {'.$cells[0].'}');
             $this->data[] = $cells;
         }
     }
@@ -43,6 +52,18 @@ class GoogleSheet
         echo '<pre>';
         print_r($this->data);
         echo '</pre>';
+    }
+
+    private function _log(string $message)
+    {
+        echo "<script>; console.log('".trim($message)."');</script>";
+    }
+
+    private function _rawLog(string $message)
+    {
+        echo "<script>;let a = '";
+        print_r($message);
+        echo "';</script>";
     }
 
 }
